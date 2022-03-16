@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- BOOTSRAP - Styling -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="A layout example that shows off a responsive photo gallery."
+  />
+  <title>Photo Gallery &ndash; Layout Examples &ndash; Pure</title>
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/pure-min.css" integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/grids-responsive-min.css">
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+  <script>
+    window.onload = (event) =>{
+      
+      var sendButton = document.getElementById("myButton");
+      sendButton.addEventListener("click", function(){
+        
+        var username = document.getElementById("username").value;
+        var country = document.getElementById("country").value;
+        var message = document.getElementById("message").value;
+        
+        console.log(username);
+        // We create AJAX object which is waiting response
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+          if(this.readyState == 4 && this.status == 200){
+            // Response data will be shown in status field
+            document.getElementById("status").innerHTML = this.responseText;
+            console.log(this.responseText);
+            // alert(this.responseText);
+          };
+        };
+        // Send the AJAX request, type is POST
+        xmlhttp.open("POST","/savemessage", true);
+        // We create AJAX parameters and the data fields
+        xmlhttp.setRequestHeader(
+          "Content-type",
+          "application/x-www-form-urlencoded"
+        );
+        xmlhttp.send("username=" + username + "&country=" + country +"&message=" + message);
+        
+      });
+    };
+    </script>
+  <body>
+    <div id="page-container">
+      <div class="header">
+        <div class="pure-menu pure-menu-horizontal">
+          <a class="pure-menu-heading" href="index.html">Home</a>
+
+          <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected">
+              <a href="guestbook" class="pure-menu-link">Guestbook</a>
+            </li>
+            <li class="pure-menu-item">
+              <a href="newmessage" class="pure-menu-link">New Message</a>
+            </li>
+            <li class="pure-menu-item">
+              <a href="ajaxform" class="pure-menu-link">Ajax Form</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    <div>
+    <!-- REMARK - Form method is  = POST or GET -->
+    <!-- action - define the URL where POST/GET request will be sent -->
+    <form class="pure-form pure-form-stacked" method="POST" action="/savemessage">
+      <fieldset>
+          <legend>Please add a new message using AJAX form</legend>
+
+              <div class=="pure-control-group">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" class="pure-u-23-24" placeholder="Enter your username" name="username" />
+              </div>
+              <div class=="pure-control-group">
+                  <label for="country">Country</label>
+                  <input type="text" id="country" class="pure-u-23-24" placeholder="What country are you from?" name="country"/>
+              </div>
+              <div class=="pure-control-group">
+                  <label for="message">Message</label>
+                  <input type="text" id="message" class="pure-u-23-24" placeholder="Enter your message here!"  name="message"/>
+              </div>
+
+          <button type="button" id="myButton" class="pure-button pure-button-primary">Submit</button>
+          <div id="status" class="form-group"></div>
+      </fieldset>
+  </form>
+  
+    </div>
+    <div class="footer">
+      @ 2022 Aleck Leino, Inc. All right reserved.
+    </div>
+  </div>
+  </body>
+</html>
